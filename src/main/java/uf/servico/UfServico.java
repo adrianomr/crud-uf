@@ -39,4 +39,13 @@ public class UfServico {
         ufDAO.merge(uf);
         return uf;
     }
+
+    @DELETE
+    @Path("uf")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uf deletaUf(Uf uf) {
+        ufDAO.remove(uf);
+        return uf;
+    }
 }
