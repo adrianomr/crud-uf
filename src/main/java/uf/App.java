@@ -5,6 +5,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import uf.util.CORSFilter;
 import uf.util.Hibernate;
 
 /**
@@ -15,6 +16,7 @@ public class App {
         System.out.println("Hello World!");
         Hibernate.getEntityManager();
         ResourceConfig config = new ResourceConfig();
+        config.register(new CORSFilter());
         config.packages("uf.servico");
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 

@@ -23,7 +23,7 @@ public class UfDAO {
         return instance;
     }
 
-    public Uf getById(final int id) {
+    public Uf getById(String id) {
         return entityManager.find(Uf.class, id);
     }
 
@@ -67,13 +67,15 @@ public class UfDAO {
         }
     }
 
-    public void removeById(final int uuid) {
+    public Uf removeById(String uuid) {
         try {
             Uf uf = getById(uuid);
             remove(uf);
+            return uf;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return null;
     }
 
 }

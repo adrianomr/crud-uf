@@ -21,6 +21,10 @@ public class Uf implements Serializable {
     private String descricao;
     private Date data;
 
+    public Uf() {
+        this.data = new Date();
+    }
+
     public String getUuid() {
         return uuid;
     }

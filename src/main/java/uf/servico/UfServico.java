@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("servico")
+@Path("servico/uf")
 public class UfServico {
     private UfDAO ufDAO;
 
@@ -16,14 +16,12 @@ public class UfServico {
     }
 
     @GET
-    @Path("uf")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Uf> getUfList() {
         return ufDAO.findAll();
     }
 
     @POST
-    @Path("uf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Uf incluiUf(Uf uf) {
@@ -32,20 +30,20 @@ public class UfServico {
     }
 
     @PUT
-    @Path("uf")
+    @Path("/{chave}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uf alteraUf(Uf uf) {
+    public Uf alteraUf(Uf uf, @PathParam("chave") String chave) {
+        uf.setUuid(chave);
         ufDAO.merge(uf);
         return uf;
     }
 
     @DELETE
-    @Path("uf")
+    @Path("/{chave}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uf deletaUf(Uf uf) {
-        ufDAO.remove(uf);
-        return uf;
+    public Uf deletaUf(@PathParam("chave") String chave) {
+        return ufDAO.removeById(chave);
     }
 }
