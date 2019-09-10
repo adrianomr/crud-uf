@@ -1,4 +1,4 @@
-package uf.util;
+package uf.util.Jetty;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;

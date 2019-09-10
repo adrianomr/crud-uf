@@ -1,10 +1,12 @@
 package uf.servico;
 
 import uf.dao.UfDAO;
+import uf.excecoes.PersistenciaExcecao;
 import uf.modelo.Uf;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("servico/uf")
@@ -24,26 +26,32 @@ public class UfServico {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uf incluiUf(Uf uf) {
+    public Response incluiUf(Uf uf) throws Exception {
         ufDAO.persist(uf);
-        return uf;
+        return Response
+                .status(Response.Status.OK)
+                .entity(uf)
+                .build();
     }
 
     @PUT
     @Path("/{chave}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uf alteraUf(Uf uf, @PathParam("chave") String chave) {
+    public Response alteraUf(Uf uf, @PathParam("chave") String chave) throws Exception {
         uf.setUuid(chave);
         ufDAO.merge(uf);
-        return uf;
+        return Response
+                .status(Response.Status.OK)
+                .entity(uf)
+                .build();
     }
 
     @DELETE
     @Path("/{chave}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Uf deletaUf(@PathParam("chave") String chave) {
+    public Uf deletaUf(@PathParam("chave") String chave) throws PersistenciaExcecao {
         return ufDAO.removeById(chave);
     }
 }

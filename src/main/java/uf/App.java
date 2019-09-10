@@ -1,7 +1,7 @@
 package uf;
 
 import uf.util.Hibernate;
-import uf.util.JettyServer;
+import uf.util.Jetty.JettyServer;
 
 /**
  * Hello world!

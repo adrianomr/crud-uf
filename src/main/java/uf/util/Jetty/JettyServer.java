@@ -1,4 +1,4 @@
-package uf.util;
+package uf.util.Jetty;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -13,6 +13,7 @@ public class JettyServer {
         ResourceConfig config = new ResourceConfig();
         config.register(new CORSFilter());
         config.packages("uf.servico");
+        config.register(new MapeamentoExcecoes());
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
         int port = Integer.parseInt(System.getenv("PORT") != null ? System.getenv("PORT") : "5000");
         server = new Server(port);

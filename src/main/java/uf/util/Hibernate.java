@@ -22,7 +22,7 @@ public class Hibernate {
             String password = "root";
             String host = "localhost";
             String bdPort = "5432";
-            String databaseName = "uf";
+            String databaseName = "postgres";
             String jdbcUrl = String.format("jdbc:postgresql://%s/%s", host, databaseName);
             if (databaseUrl != null) {
                 StringTokenizer st = new StringTokenizer(databaseUrl, ":@/");

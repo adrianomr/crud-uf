@@ -1,6 +1,8 @@
 package uf.modelo;
 
 import org.hibernate.annotations.GenericGenerator;
+import uf.excecoes.CampoEmBrancoExcecao;
+import uf.util.Acao;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,21 @@ public class Uf implements Serializable {
         this.data = new Date();
     }
 
+    public boolean valida(Acao.tipo acao) throws Exception {
+        switch (acao) {
+            case INCLUI:
+            case ALTERA:
+                if (getDescricao().isEmpty())
+                    throw new CampoEmBrancoExcecao().setCampo("descricao");
+                if (getUf().isEmpty())
+                    throw new CampoEmBrancoExcecao().setCampo("uf");
+                break;
+            case DELETA:
+                break;
+        }
+        return true;
+    }
+
     public String getUuid() {
         return uuid;
     }
@@ -34,7 +51,7 @@ public class Uf implements Serializable {
     }
 
     public String getUf() {
-        return uf;
+        return uf == null ? "" : uf;
     }
 
     public void setUf(String uf) {
@@ -42,7 +59,7 @@ public class Uf implements Serializable {
     }
 
     public String getDescricao() {
-        return descricao;
+        return descricao == null ? "" : descricao;
     }
 
     public void setDescricao(String descricao) {

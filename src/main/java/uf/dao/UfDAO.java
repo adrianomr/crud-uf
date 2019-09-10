@@ -1,6 +1,8 @@
 package uf.dao;
 
+import uf.excecoes.PersistenciaExcecao;
 import uf.modelo.Uf;
+import uf.util.Acao;
 import uf.util.Hibernate;
 
 import javax.persistence.EntityManager;
@@ -33,7 +35,8 @@ public class UfDAO {
                 Uf.class.getName()).getResultList();
     }
 
-    public void persist(Uf uf) {
+    public void persist(Uf uf) throws Exception {
+        uf.valida(Acao.tipo.INCLUI);
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(uf);
@@ -41,10 +44,12 @@ public class UfDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw new PersistenciaExcecao();
         }
     }
 
-    public void merge(Uf uf) {
+    public void merge(Uf uf) throws Exception {
+        uf.valida(Acao.tipo.ALTERA);
         try {
             entityManager.getTransaction().begin();
             entityManager.merge(uf);
@@ -52,10 +57,12 @@ public class UfDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw new PersistenciaExcecao();
         }
     }
 
-    public void remove(Uf uf) {
+    public void remove(Uf uf) throws Exception {
+        uf.valida(Acao.tipo.DELETA);
         try {
             entityManager.getTransaction().begin();
             uf = entityManager.find(Uf.class, uf.getUuid());
@@ -64,18 +71,19 @@ public class UfDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
+            throw new PersistenciaExcecao();
         }
     }
 
-    public Uf removeById(String uuid) {
+    public Uf removeById(String uuid) throws PersistenciaExcecao {
         try {
             Uf uf = getById(uuid);
             remove(uf);
             return uf;
         } catch (Exception ex) {
             ex.printStackTrace();
+            throw new PersistenciaExcecao();
         }
-        return null;
     }
 
 }
